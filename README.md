@@ -38,14 +38,3 @@ Uses **Next.js 15, Prisma, Clerk, OpenAI, TypeScript, and Docker** to create a *
 1. Clone the repo:  
 ```bash
 git clone https://github.com/singhayush007/AI_FORM_GENERATOR.git
-
-
-2. Install dependencies:
-```bash
-npm install
-
-3. Start development server:
-```bash
-npm run dev
-
-4. Open http://localhost:3000 in your browser
