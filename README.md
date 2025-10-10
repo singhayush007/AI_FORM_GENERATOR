@@ -1,4 +1,4 @@
-# AI FORM GENERATOR
+# 📝 AI FORM GENERATOR
 
 Build your own **AI-Powered Form Generator SaaS** from scratch! 🚀
 
@@ -6,7 +6,7 @@ Generate dynamic forms with AI, manage users securely, and deploy effortlessly u
 
 ---
 
-## Tech Stack
+## 🧱Tech Stack
 
 ![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=next.js&logoColor=white)
 ![Prisma](https://img.shields.io/badge/Prisma-0C344B?style=flat&logo=prisma&logoColor=white)
@@ -24,7 +24,7 @@ Generate dynamic forms with AI, manage users securely, and deploy effortlessly u
 
 ---
 
-## Features
+## 🚀Features 
 
 - ⚡ **Generate dynamic forms** powered by AI
 - 🔐 **User authentication & secure data storage**
@@ -34,7 +34,7 @@ Generate dynamic forms with AI, manage users securely, and deploy effortlessly u
 
 ---
 
-## Project Structure
+## 📁 Project Structure 
 ```
 AI_FORM_GENERATOR/
 ├── app/                    # Next.js app directory
@@ -69,53 +69,52 @@ AI_FORM_GENERATOR/
 
 ```
 
-## Getting Started
-
+## 🏁 Getting Started 
 Follow these steps to run the project locally:
 
 1. **Clone the repository:**
-
 ```
 git clone https://github.com/singhayush007/AI_FORM_GENERATOR.git
 ```
 
 2. **Navigate to the project folder:**
-
 ```
 cd AI_FORM_GENERATOR
 ```
 
 3. **Install dependencies:**
-
 ```
 npm install
 ```
 
 4. **Create a .env.local file in the root and add your environment variables:**
-
 ```
+DATABASE_URL=your_supabase_database_url
+DIRECT_URL=your_supabase_direct_url
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
 CLERK_SECRET_KEY=your_clerk_secret_key
-DATABASE_URL=your_postgresql_database_url
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
 OPENROUTER_API_KEY=your_openrouter_api_key
 ```
 
 5. **Run the development server:**
-
 ```
 npm run dev
 ```
 
 6. **Open the app in your browser:**
-
 ```
 http://localhost:3000
 ```
-## Deployment
+
+## Deployment 💻
 You can deploy this app using Vercel, Docker, or any Node.js hosting platform.
 
 
-## With Docker
+**Docker🐳**
 1. **Build the Docker image:**
 ```
 docker build -t ai-form-generator .
@@ -124,12 +123,11 @@ docker build -t ai-form-generator .
 ```
 docker run -p 3000:3000 ai-form-generator
 ```
-**License section**
 
-## License
-```
+## 📄License 
+
 This project is licensed under the MIT License.
-```
+
 
 
 
