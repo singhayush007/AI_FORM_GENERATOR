@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { UserButton } from "@clerk/nextjs";
 import DarkMode from "@/components/DarkMode";
 import React from "react";
+import Link from "next/link";
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -13,7 +14,12 @@ const layout = ({ children }: { children: React.ReactNode }) => {
           <Logo />
           <div className="flex items-center gap-2">
             <DarkMode />
-            <Button variant={"link"}>Dashboard</Button>
+            <Link href="/dashboard">
+              <span className="text-lg font-bold cursor-pointer hover:text-blue-500">
+                Dashboard
+              </span>
+            </Link>
+
             <UserButton />
           </div>
         </nav>
@@ -24,3 +30,6 @@ const layout = ({ children }: { children: React.ReactNode }) => {
 };
 
 export default layout;
+
+
+

@@ -1,8 +1,8 @@
-# AI_FORM_GENERATOR
+# AI FORM GENERATOR
 
-Build your own **AI-Powered Form Generator SaaS** from scratch! 🚀  
+Build your own **AI-Powered Form Generator SaaS** from scratch! 🚀
 
-Uses **Next.js 15, Prisma, Clerk, OpenAI, TypeScript, and Docker** to create a **scalable, production-ready app**. Generate dynamic forms with AI, manage users securely, and deploy effortlessly.  
+Generate dynamic forms with AI, manage users securely, and deploy effortlessly using **Next.js, Prisma, Clerk, OpenRouter, TypeScript, and Docker**. This app is production-ready and scalable for modern web projects.
 
 ---
 
@@ -11,7 +11,7 @@ Uses **Next.js 15, Prisma, Clerk, OpenAI, TypeScript, and Docker** to create a *
 ![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=next.js&logoColor=white)
 ![Prisma](https://img.shields.io/badge/Prisma-0C344B?style=flat&logo=prisma&logoColor=white)
 ![Clerk](https://img.shields.io/badge/Clerk-FF3B30?style=flat&logo=clerk&logoColor=white)
-![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=flat&logo=openai&logoColor=white)
+![OpenRouter](https://img.shields.io/badge/OpenRouter-FF6C37?style=flat&logo=openai&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green)
@@ -26,15 +26,86 @@ Uses **Next.js 15, Prisma, Clerk, OpenAI, TypeScript, and Docker** to create a *
 
 ## Features
 
-- Generate dynamic forms powered by AI  
-- User authentication & secure data storage  
-- Easily deployable with Docker  
-- Scalable architecture for production use  
+- ⚡ **Generate dynamic forms** powered by AI
+- 🔐 **User authentication & secure data storage**
+- 🐳 **Easily deployable** with Docker
+- 📈 **Scalable architecture** for production use
+- ✨ Clean, responsive, and user-friendly UI
 
 ---
 
+## Project Structure
+
+```
+app/ – Next.js app directory
+components/ – Reusable UI components
+lib/ – Prisma client and utility functions
+actions/ – Server actions for forms and submissions
+prisma/ – Prisma schema & migrations
+
+```
+
 ## Getting Started
 
-1. Clone the repo:  
-```bash
+Follow these steps to run the project locally:
+
+1. **Clone the repository:**
+
+````bash
 git clone https://github.com/singhayush007/AI_FORM_GENERATOR.git
+
+
+2. Navigate to the project folder:
+```bash
+cd AI_FORM_GENERATOR
+````
+
+3. Install dependencies:
+
+```
+npm install
+```
+
+4. Create a .env.local file in the root and add your environment variables:
+
+```
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+DATABASE_URL=your_postgresql_database_url
+OPENROUTER_API_KEY=your_openrouter_api_key
+```
+
+5. Run the development server:
+
+```
+npm run dev
+```
+
+6. Open the app in your browser:
+
+```
+http://localhost:3000
+```
+
+Deployment
+
+You can deploy this app using Vercel, Docker, or any Node.js hosting platform.
+
+With Vercel:
+
+Push your repository to GitHub.
+
+Import the project in Vercel.
+
+Add your environment variables in Vercel dashboard.
+
+Deploy.
+
+With Docker:
+
+docker build -t ai-form-generator .
+docker run -p 3000:3000 ai-form-generator
+
+License
+
+This project is licensed under the MIT License.

@@ -47,10 +47,10 @@ const PricingPage: React.FC<Props> = ({ userId }) => {
               plan.level === "Enterprise" ? "bg-[#1c1c1c] text-white" : ""
             } w-full sm:w-[300px] md:w-[350px] flex flex-col justify-between`}
           >
-            <CardHeader className="flex flex-row items-center gap-4">
+            <CardHeader className="flex flex-row items-center gap-4 ">
               <CardTitle>{plan.level}</CardTitle>
               {plan.level === "Pro" && (
-                <Badge className="rounded-full bg-orange-600">🔥 Popular</Badge>
+                <Badge className="rounded-full bg-orange-600 ">🔥 Popular</Badge>
               )}
             </CardHeader>
 
