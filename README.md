@@ -110,11 +110,11 @@ npm run dev
 http://localhost:3000
 ```
 
-## Deployment 💻
+## 💻 Deployment
 You can deploy this app using Vercel, Docker, or any Node.js hosting platform.
 
 
-**Docker🐳**
+**🐳Docker**
 1. **Build the Docker image:**
 ```
 docker build -t ai-form-generator .
