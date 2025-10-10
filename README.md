@@ -35,13 +35,37 @@ Generate dynamic forms with AI, manage users securely, and deploy effortlessly u
 ---
 
 ## Project Structure
-
 ```
-app/ – Next.js app directory
-components/ – Reusable UI components
-lib/ – Prisma client and utility functions
-actions/ – Server actions for forms and submissions
-prisma/ – Prisma schema & migrations
+AI_FORM_GENERATOR/
+├── app/                    # Next.js app directory
+│   ├── dashboard/          # Dashboard pages
+│   ├── success/            # Success page
+├── components/             # Reusable UI components
+│   ├── AiGeneratedForm.tsx
+│   ├── Analytics.tsx
+│   ├── FormList.tsx
+│   ├── FormPublishDialog.tsx
+│   ├── Header.tsx
+│   ├── Sidebar.tsx
+│   ├── SubmissionsDetails.tsx
+│   ├── UpgradeButton.tsx
+│   ├── theme-provider.tsx
+│   └── ui/                 # UI components
+├── actions/                # Server-side actions
+│   ├── deleteForm.ts
+│   ├── formStats.ts
+│   ├── generatorForm.ts
+│   ├── getForms.ts
+│   ├── publishForm.ts
+│   ├── submitForm.ts
+│   └── userSubscription.ts
+├── lib/                    # Prisma client and utility functions
+├── prisma/                 # Prisma schema & migrations
+├── tailwind.config.js      # Tailwind CSS configuration
+├── types/                  # TypeScript types
+│   └── form.ts
+├── package.json            # Project metadata and dependencies
+└── README.md               # Project documentation
 
 ```
 
@@ -51,22 +75,23 @@ Follow these steps to run the project locally:
 
 1. **Clone the repository:**
 
-````bash
+```
 git clone https://github.com/singhayush007/AI_FORM_GENERATOR.git
+```
 
+2. **Navigate to the project folder:**
 
-2. Navigate to the project folder:
-```bash
+```
 cd AI_FORM_GENERATOR
-````
+```
 
-3. Install dependencies:
+3. **Install dependencies:**
 
 ```
 npm install
 ```
 
-4. Create a .env.local file in the root and add your environment variables:
+4. **Create a .env.local file in the root and add your environment variables:**
 
 ```
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
@@ -75,37 +100,36 @@ DATABASE_URL=your_postgresql_database_url
 OPENROUTER_API_KEY=your_openrouter_api_key
 ```
 
-5. Run the development server:
+5. **Run the development server:**
 
 ```
 npm run dev
 ```
 
-6. Open the app in your browser:
+6. **Open the app in your browser:**
 
 ```
 http://localhost:3000
 ```
-
-Deployment
-
+## Deployment
 You can deploy this app using Vercel, Docker, or any Node.js hosting platform.
 
-With Vercel:
 
-Push your repository to GitHub.
-
-Import the project in Vercel.
-
-Add your environment variables in Vercel dashboard.
-
-Deploy.
-
-With Docker:
-
+## With Docker
+1. **Build the Docker image:**
+```
 docker build -t ai-form-generator .
+```
+2. **Run the container:**
+```
 docker run -p 3000:3000 ai-form-generator
+```
+**License section**
 
-License
-
+## License
+```
 This project is licensed under the MIT License.
+```
+
+
+
