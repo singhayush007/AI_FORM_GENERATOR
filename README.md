@@ -14,6 +14,7 @@ Generate dynamic forms with AI, manage users securely, and deploy effortlessly u
 ![OpenRouter](https://img.shields.io/badge/OpenRouter-FF6C37?style=flat&logo=openai&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
 ![Stripe](https://img.shields.io/badge/Stripe-635BFF?style=flat&logo=stripe&logoColor=white)
+![Webhook](https://img.shields.io/badge/Webhook-FF8800?style=flat&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
