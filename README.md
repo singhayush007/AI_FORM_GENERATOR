@@ -13,8 +13,7 @@ Generate dynamic forms with AI, manage users securely, and deploy effortlessly u
 ![Clerk](https://img.shields.io/badge/Clerk-FF3B30?style=flat&logo=clerk&logoColor=white)
 ![OpenRouter](https://img.shields.io/badge/OpenRouter-FF6C37?style=flat&logo=openai&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
-![Stripe](https://img.shields.io/badge/Stripe-635BFF?style=flat&logo=stripe&logoColor=white)
-![Webhook](https://img.shields.io/badge/Webhook-FF8800?style=flat&logoColor=white)
+![Razorpay](https://img.shields.io/badge/Razorpay-528FF0?style=flat&logo=razorpay&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
@@ -106,6 +105,9 @@ NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
 NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
 OPENROUTER_API_KEY=your_openrouter_api_key
+NEXT_PUBLIC_RAZORPAY_KEY_ID=your_razorpay_key_id
+RAZORPAY_KEY_SECRET=your_razorpay_key_secret
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
 ```
 
 5. **Run the development server:**

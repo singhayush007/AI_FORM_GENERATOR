@@ -14,22 +14,25 @@ type Props = {
 };
 
 const SubmissionsDetails: React.FC<Props> = ({ submission, index }) => {
- 
   return (
     <div>
-      <h1 className="font-bold text-2xl mb-4">Response - {index + 1}</h1>
-      <Table>
-        <TableHeader>
+      <h2 className="font-bold text-xl mb-4 text-gray-900 dark:text-gray-100">
+        Response - {index + 1}
+      </h2>
+      <Table className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+        <TableHeader className="bg-gray-100 dark:bg-gray-800">
           <TableRow>
-            <TableHead>Questions</TableHead>
-            <TableHead>Answer</TableHead>
+            <TableHead className="text-gray-900 dark:text-gray-100">Questions</TableHead>
+            <TableHead className="text-gray-900 dark:text-gray-100">Answer</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody>
-          {Object.entries(submission?.content).map(([key, value], index:number) => ( 
-            <TableRow key={index}>
-              <TableCell>{key}</TableCell>
-              <TableCell>{Array.isArray(value) ? value.join(", ") : String(value)}</TableCell>
+        <TableBody className="bg-white dark:bg-gray-900">
+          {Object.entries(submission?.content).map(([key, value], idx: number) => (
+            <TableRow key={idx} className="border-t border-gray-200 dark:border-gray-700">
+              <TableCell className="text-gray-900 dark:text-gray-100">{key}</TableCell>
+              <TableCell className="text-gray-900 dark:text-gray-100">
+                {Array.isArray(value) ? value.join(", ") : String(value)}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

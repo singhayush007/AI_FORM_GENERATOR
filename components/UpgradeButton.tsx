@@ -2,20 +2,19 @@ import Link from "next/link";
 import React from "react";
 import { Progress } from "./ui/progress";
 import { getForms } from "@/actions/getForms";
-import { getUserSubscription } from "@/actions/userSubscription"; 
+import { getUserSubscription } from "@/actions/userSubscription";
 import { MAX_FREE_FORM } from "@/lib/utils";
 
 type Props = {
-  userId:string | undefined;
-}
+  userId: string | undefined;
+};
 
-const UpgradeButton : React.FC<Props> = async ({userId}) => {
-  const forms = await getForms(); 
+const UpgradeButton: React.FC<Props> = async ({ userId }) => {
+  const forms = await getForms();
   const isSubscribed = await getUserSubscription(userId!);
 
   const formsGenerated = forms?.data?.length;
   const percentage = (formsGenerated! / MAX_FREE_FORM) * 100;
-
 
   return (
     <div className="m-3">
@@ -25,7 +24,7 @@ const UpgradeButton : React.FC<Props> = async ({userId}) => {
         </span>
       ) : (
         <>
-          <Progress value={percentage}/>
+          <Progress value={percentage} />
           <p>
             2 out of 3 forms generated.{" "}
             <Link

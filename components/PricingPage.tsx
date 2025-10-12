@@ -20,12 +20,57 @@ type Props = {
 const PricingPage: React.FC<Props> = ({ userId }) => {
   const router = useRouter();
 
-  const handlePlanClick = (plan: string) => {
+  const handlePlanClick = async (plan: string, price: number) => {
     if (!userId) {
       router.push("/sign-in");
       return;
     }
-    alert(`Selected Plan: ${plan}`); // Just show alert instead of Stripe checkout
+
+    // ✅ Free plan handling
+    if (price === 0) {
+      alert("✅ Free plan selected! No payment required.");
+      router.push("/success");
+      return;
+    }
+
+    try {
+      // 1️⃣ Create order on backend
+      const res = await fetch("/api/razorpay", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: price, currency: "INR", plan }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert("Payment failed: " + (data.error || "Please try again"));
+        return;
+      }
+
+      // 2️⃣ Razorpay checkout
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: data.amount,
+        currency: data.currency,
+        name: "AI Form Generator",
+        description: `${plan} Plan`,
+        order_id: data.id,
+        handler: function (response: any) {
+          alert(
+            "✅ Payment Successful! Payment ID: " + response.razorpay_payment_id
+          );
+          router.push("/success");
+        },
+        theme: { color: "#2563eb" },
+      };
+
+      const rzp = new (window as any).Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.error("Payment error:", error);
+      alert("Something went wrong while creating order");
+    }
   };
 
   return (
@@ -42,20 +87,22 @@ const PricingPage: React.FC<Props> = ({ userId }) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-15 justify-center">
         {pricingPlan.map((plan: PricingPlan) => (
           <Card
-            key={plan.level} // Unique key
+            key={plan.level}
             className={`${
               plan.level === "Enterprise" ? "bg-[#1c1c1c] text-white" : ""
             } w-full sm:w-[300px] md:w-[350px] flex flex-col justify-between`}
           >
-            <CardHeader className="flex flex-row items-center gap-4 ">
+            <CardHeader className="flex flex-row items-center gap-4">
               <CardTitle>{plan.level}</CardTitle>
               {plan.level === "Pro" && (
-                <Badge className="rounded-full bg-orange-600 ">🔥 Popular</Badge>
+                <Badge className="rounded-full bg-orange-600">🔥 Popular</Badge>
               )}
             </CardHeader>
 
             <CardContent className="flex-1">
-              <p className="text-2xl font-bold">{plan.price}</p>
+              <p className="text-2xl font-bold">
+                {plan.price === 0 ? "$0/month" : `$${plan.price}/month`}
+              </p>
               <ul className="mt-4 space-y-2">
                 {plan.services.map((item) => (
                   <li className="flex items-center" key={item}>
@@ -73,7 +120,7 @@ const PricingPage: React.FC<Props> = ({ userId }) => {
                   plan.level === "Enterprise" &&
                   "text-black bg-white hover:bg-gray-200"
                 } w-full`}
-                onClick={() => handlePlanClick(plan.level)}
+                onClick={() => handlePlanClick(plan.level, plan.price)}
               >
                 Get started with {plan.level}
               </Button>
@@ -86,4 +133,3 @@ const PricingPage: React.FC<Props> = ({ userId }) => {
 };
 
 export default PricingPage;
-

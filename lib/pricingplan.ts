@@ -1,15 +1,14 @@
-
 export type PricingPlan = {
-    level:string;
-    price:string;
-    services:string[]
+    level: string;
+    price: number; 
+    services: string[];
 }
 
-export const pricingPlan : PricingPlan[] = [
+export const pricingPlan: PricingPlan[] = [
     {
-        level:"Free",
-        price:"$0/month",
-        services:[
+        level: "Free",
+        price: 0,
+        services: [
             "3 Free Credits",
             "Basic Supports",
             "Limited Features",
@@ -17,9 +16,9 @@ export const pricingPlan : PricingPlan[] = [
         ]
     },
     {
-        level:"Pro",
-        price:"$29/month",
-        services:[
+        level: "Pro",
+        price: 29, // INR
+        services: [
             "Unlimited Credits",
             "Basic Supports",
             "Limited Features",
@@ -27,9 +26,9 @@ export const pricingPlan : PricingPlan[] = [
         ]
     },
     {
-        level:"Enterprise",
-        price:"$70/month",
-        services:[
+        level: "Enterprise",
+        price: 70, // INR
+        services: [
             "Unlimited Credits",
             "Basic Supports",
             "Limited Features",
@@ -37,4 +36,4 @@ export const pricingPlan : PricingPlan[] = [
             "Monthly Updates"
         ]
     },
-] 
+];
