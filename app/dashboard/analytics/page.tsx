@@ -1,13 +1,17 @@
 import { getFormStats } from "@/actions/formStats";
 import Analytics from "@/components/Analytics";
 import React from "react";
+
 const AnalyticsPage = async () => {
-  const data = await getFormStats();
+  const stats = await getFormStats();
 
   return (
-    <div>
-      <Analytics noOfSubmissions={data || 0} />
-    </div>
+    <Analytics
+      totalForms={stats.totalForms}
+      publishedForms={stats.publishedForms}
+      draftForms={stats.draftForms}
+      totalSubmissions={stats.totalSubmissions}
+    />
   );
 };
 

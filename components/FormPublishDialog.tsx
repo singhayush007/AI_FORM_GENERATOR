@@ -19,36 +19,47 @@ type Props = {
 };
 
 const FormPublishDialog: React.FC<Props> = ({ formId, open, onOpenChange }) => {
-    const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+  const shareLink = typeof window !== "undefined"
+    ? `${window.location.origin}/forms/${formId}`
+    : `/forms/${formId}`;
 
-    const copyClipboard = () => {
-      const link = `${BASE_URL}/forms/${formId}`;
-      navigator.clipboard.writeText(link);
-      toast.success('Copied to clipboard');
-    }
+  const copyClipboard = () => {
+    navigator.clipboard.writeText(shareLink);
+    toast.success("Link copied to clipboard!");
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Your Form has been successfully published!</DialogTitle>
-          <DialogDescription>
-            You can now share your form with the workd and start collection
-            response.
+          <DialogTitle className="text-xl font-bold text-gray-900 dark:text-gray-100">
+            🎉 Form Published Successfully!
+          </DialogTitle>
+          <DialogDescription className="text-gray-500 dark:text-gray-400">
+            Your form is live. Share the link below to start collecting responses.
           </DialogDescription>
         </DialogHeader>
-        <div>
-          <p>Your form is now live and can be accessed at the following URL:</p>
-          <br />
-          <div className="flex items-center justify-between mt-4 gap-2">
-            <LinkIcon />
+
+        <div className="space-y-4 pt-2">
+          <div className="flex items-center gap-2 p-3 bg-blue-50 dark:bg-blue-950 rounded-xl border border-blue-200 dark:border-blue-800">
+            <LinkIcon className="w-4 h-4 text-blue-500 shrink-0" />
             <Input
-              placeholder="link"
-              disabled
-              className="w-full outline-none bg-gray-100 dark:bg-gray-800"
-              value={`${BASE_URL}/forms/${formId}`}
+              readOnly
+              className="border-0 bg-transparent text-blue-700 dark:text-blue-300 text-sm font-mono p-0 h-auto focus-visible:ring-0 focus-visible:ring-offset-0"
+              value={shareLink}
             />
-            <Button onClick={copyClipboard}>Copy</Button>
+          </div>
+          <div className="flex gap-2">
+            <Button onClick={copyClipboard} className="flex-1 bg-blue-600 hover:bg-blue-700 text-white cursor-pointer">
+              Copy Link
+            </Button>
+            <Button
+              variant="outline"
+              className="flex-1 cursor-pointer"
+              onClick={() => window.open(shareLink, "_blank")}
+            >
+              Open Form
+            </Button>
           </div>
         </div>
       </DialogContent>

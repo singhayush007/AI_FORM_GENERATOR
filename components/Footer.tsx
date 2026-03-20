@@ -10,11 +10,10 @@ const Footer: FC = () => {
         {/* Brand & About */}
         <div className="flex flex-col gap-4">
           <h2 className="text-3xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-500 bg-clip-text text-transparent">
-            AI Form Generator
+            Formify.ai
           </h2>
           <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-            Create AI-driven forms effortlessly and streamline your workflow
-            with smart automation tools.
+            Build production-ready forms in seconds using AI. Just describe what you need — we handle the rest.
           </p>
           <div className="flex items-center gap-3 mt-3">
             {[
@@ -80,7 +79,7 @@ const Footer: FC = () => {
       <div className="mt-14 border-t border-gray-300 dark:border-gray-700 pt-6 text-center text-sm text-gray-500 dark:text-gray-400 ">
         &copy; {new Date().getFullYear()}{" "}
         <span className="font-semibold text-blue-600 dark:text-purple-400">
-          AI Form Generator
+          Formify.ai
         </span>
         . All rights reserved.
       </div>

@@ -1,15 +1,26 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "./ui/card";
 import { Button } from "./ui/button";
-import { Edit2, Trash2 } from "lucide-react";
+import { Badge } from "./ui/badge";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "./ui/alert-dialog";
+import { Edit2, Trash2, Users, Globe, Lock, Eye, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { Form } from "@/types/form";
 import { deleteForm } from "@/actions/deleteForm";
@@ -22,74 +33,106 @@ type Props = {
 
 const FormList: React.FC<Props> = ({ form }) => {
   const router = useRouter();
+  const [deleting, setDeleting] = useState(false);
 
-  const deleteFormHandler = async (formId: number) => {
-    const data = await deleteForm(formId);
+  const deleteFormHandler = async () => {
+    setDeleting(true);
+    const data = await deleteForm(form.id);
+    setDeleting(false);
     if (data.success) toast.success(data.message);
     else toast.error(data.message);
   };
 
   return (
-    <Card
-      className="
-        w-full 
-        max-w-[400px]
-        bg-white dark:bg-neutral-900
-        border border-gray-200 dark:border-gray-700
-        rounded-2xl shadow-sm
-        hover:shadow-xl hover:scale-[1.02]
-        transition-all duration-300 ease-in-out
-        flex flex-col justify-between
-      "
-    >
-      <div>
-        <CardHeader className="space-y-2">
-          <CardTitle className="text-lg font-semibold text-gray-800 dark:text-gray-100 truncate">
+    <Card className="w-full max-w-[380px] bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-2xl shadow-sm hover:shadow-lg hover:border-blue-300 dark:hover:border-blue-700 transition-all duration-200 flex flex-col justify-between group">
+      <CardHeader className="pb-3">
+        <div className="flex items-start justify-between gap-2">
+          <CardTitle className="text-base font-semibold text-gray-900 dark:text-gray-100 truncate leading-snug">
             {form.content.formTitle || "Untitled Form"}
           </CardTitle>
-          <CardDescription className="text-gray-600 dark:text-gray-400 text-sm">
-            Manage and track your form submissions easily.
-          </CardDescription>
-        </CardHeader>
+          <Badge
+            className={
+              form.published
+                ? "shrink-0 bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300 border-0"
+                : "shrink-0 bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300 border-0"
+            }
+          >
+            {form.published ? (
+              <><Globe className="w-3 h-3 mr-1" />Live</>
+            ) : (
+              <><Lock className="w-3 h-3 mr-1" />Draft</>
+            )}
+          </Badge>
+        </div>
+      </CardHeader>
 
-        <CardContent className="mt-2">
-          <Link href={`/dashboard/forms/${form.id}/submissions`}>
-            <Button
-              variant="link"
-              className="text-blue-600 dark:text-blue-400 font-medium cursor-pointer hover:underline"
-            >
-              Submissions – {form.submissions}
-            </Button>
-          </Link>
-        </CardContent>
-      </div>
+      <CardContent className="py-0">
+        <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+          <div className="flex items-center gap-1.5">
+            <Users className="w-4 h-4" />
+            <span>{form.submissions} submission{form.submissions !== 1 ? "s" : ""}</span>
+          </div>
+        </div>
+      </CardContent>
 
-      <CardFooter className="flex justify-between items-center mt-4 gap-3 p-4 pt-0">
-        <Button
-          variant="outline"
-          className="
-            flex items-center gap-2
-            hover:bg-blue-100 dark:hover:bg-blue-900
-            cursor-pointer transition-all duration-200
-          "
-          onClick={() => router.push(`/dashboard/forms/edit/${form.id}`)}
-        >
-          <Edit2 size={16} />
-          Edit
-        </Button>
-        <Button
-          variant="destructive"
-          className="
-            flex items-center gap-2
-            bg-red-600 hover:bg-red-700
-            text-white cursor-pointer
-            transition-all duration-200
-          "
-          onClick={() => deleteFormHandler(form.id)}
-        >
-          <Trash2 size={16} />
-          Delete
-        </Button>
+      <CardFooter className="flex items-center justify-between gap-2 pt-4 mt-2 border-t border-gray-100 dark:border-neutral-800">
+        <Link href={`/dashboard/forms/${form.id}/submissions`}>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950 cursor-pointer gap-1.5 text-xs"
+          >
+            <Eye className="w-3.5 h-3.5" />
+            Responses
+          </Button>
+        </Link>
+
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            className="gap-1.5 hover:bg-blue-50 dark:hover:bg-blue-950 hover:border-blue-400 cursor-pointer text-xs transition-colors"
+            onClick={() => router.push(`/dashboard/forms/edit/${form.id}`)}
+          >
+            <Edit2 className="w-3.5 h-3.5" />
+            Edit
+          </Button>
+
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button
+                variant="destructive"
+                size="sm"
+                disabled={deleting}
+                className="gap-1.5 bg-red-500 hover:bg-red-600 text-white cursor-pointer text-xs transition-colors"
+              >
+                {deleting ? (
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                ) : (
+                  <Trash2 className="w-3.5 h-3.5" />
+                )}
+                Delete
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Delete this form?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This will permanently delete &ldquo;{form.content.formTitle || "Untitled Form"}&rdquo; and all its submissions. This action cannot be undone.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel className="cursor-pointer">Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={deleteFormHandler}
+                  className="bg-red-500 hover:bg-red-600 text-white cursor-pointer"
+                >
+                  Yes, delete
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </div>
       </CardFooter>
     </Card>
   );

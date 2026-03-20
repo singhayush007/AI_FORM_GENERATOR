@@ -1,145 +1,275 @@
-# 📝 AI FORM GENERATOR
+# 🤖 Formify.ai — AI-Powered Form Builder SaaS (Next.js + Groq + Supabase)
 
-Build your own **AI-Powered Form Generator SaaS** from scratch! 🚀
+<div align="center">
 
-Generate dynamic forms with AI, manage users securely, and deploy effortlessly using **Next.js, Prisma, Clerk, OpenRouter, TypeScript, and Docker**. This app is production-ready and scalable for modern web projects.
+![GitHub stars](https://img.shields.io/github/stars/singhayush007/ai_form_generator?style=flat-square)
+![GitHub forks](https://img.shields.io/github/forks/singhayush007/ai_form_generator?style=flat-square)
+![GitHub issues](https://img.shields.io/github/issues/singhayush007/ai_form_generator?style=flat-square)
+![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
+![Made with Next.js](https://img.shields.io/badge/Stack-Next.js_15-000000?style=flat-square&logo=next.js&logoColor=white)
+
+**A production-ready full-stack AI-powered Form Builder SaaS using Next.js 15, Groq AI, Supabase, Clerk, and Razorpay.**
+
+[🌐 Live Demo](https://ai-form-generator.vercel.app) · [🐛 Report Bug](https://github.com/singhayush007/ai_form_generator/issues) · [✨ Request Feature](https://github.com/singhayush007/ai_form_generator/issues)
+
+</div>
 
 ---
 
-## 🧱 Tech Stack
+## 📋 Table of Contents
 
-![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=next.js&logoColor=white)
-![Prisma](https://img.shields.io/badge/Prisma-0C344B?style=flat&logo=prisma&logoColor=white)
-![Clerk](https://img.shields.io/badge/Clerk-FF3B30?style=flat&logo=clerk&logoColor=white)
-![OpenRouter](https://img.shields.io/badge/OpenRouter-FF6C37?style=flat&logo=openai&logoColor=white)
+- [About](#-about)
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Folder Structure](#️-folder-structure)
+- [Getting Started](#-getting-started)
+- [Environment Variables](#-environment-variables)
+- [Running the App](#️-running-the-app)
+- [Deployment](#️-deployment)
+- [Contributing](#-contributing)
+- [License](#-license)
+
+---
+
+## 📖 About
+
+**Formify.ai** is a full-stack SaaS application built on **Next.js 15 App Router** that lets users generate complete, production-ready forms in seconds by just describing them in plain English.
+
+It uses **Groq AI (Llama-3.3-70b)** to generate structured JSON form schemas, **Supabase (PostgreSQL)** via **Prisma** for data storage, **Clerk** for authentication, and **Razorpay** for subscription payments. Forms are instantly publishable with a shareable link, and all submissions are collected and viewable on a dashboard.
+
+---
+
+## ✨ Features
+
+| Feature | Description |
+| --- | --- |
+| 🤖 **AI Form Generation** | Describe your form in plain English — Groq AI builds the complete form schema in seconds |
+| 🔐 **Authentication** | Secure sign-up / sign-in with **Clerk** (social login, email, magic link) |
+| 📋 **Dynamic Form Fields** | AI auto-assigns correct field types: text, email, phone, file upload, date, number, textarea, URL, and dropdowns |
+| ✅ **Form Validation** | Client-side validation using **Formik + Yup** with type-specific rules (email, URL, phone, required) |
+| 🌐 **One-Click Publishing** | Publish forms and share a unique public URL — no login required to fill |
+| 📥 **Response Collection** | Every submission is stored securely and viewable in the dashboard |
+| 📊 **Analytics Dashboard** | Track total forms, submissions, published vs draft stats, and conversion rate |
+| 💳 **Subscription Plans** | Free, Pro, and Enterprise plans with **Razorpay** payment gateway integration |
+| 🌙 **Dark Mode** | Full dark/light mode support via **next-themes** |
+| 🗑️ **Delete Confirmation** | Safe delete with confirmation dialog before removing forms |
+| 📎 **Shareable Links** | Auto-resolves to the correct domain on any deployment (localhost or Vercel) |
+
+---
+
+## 💻 Tech Stack
+
+### Frontend
+![Next.js](https://img.shields.io/badge/Next.js_15-000000?style=flat&logo=next.js&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_v4-06B6D4?style=flat&logo=tailwind-css&logoColor=white)
+![shadcn/ui](https://img.shields.io/badge/shadcn/ui-000000?style=flat&logo=shadcnui&logoColor=white)
+![Formik](https://img.shields.io/badge/Formik-172B4D?style=flat)
+![Yup](https://img.shields.io/badge/Yup-FF6B6B?style=flat)
+![next-themes](https://img.shields.io/badge/next--themes-000000?style=flat)
+
+### Backend / Services
+![Groq](https://img.shields.io/badge/Groq_AI-FF4D00?style=flat&logo=groq&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma_v6-0C344B?style=flat&logo=prisma&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white)
+![Clerk](https://img.shields.io/badge/Clerk-6C47FF?style=flat&logo=clerk&logoColor=white)
 ![Razorpay](https://img.shields.io/badge/Razorpay-528FF0?style=flat&logo=razorpay&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
 
-## Screenshot
-
-![Project Screenshot](./assets/screenshot.png)
-
----
-
-## 🚀 Features
-
-- ⚡ **Generate dynamic forms** powered by AI
-- 🔐 **User authentication & secure data storage**
-- 🐳 **Easily deployable** with Docker
-- 📈 **Scalable architecture** for production use
-- ✨ Clean, responsive, and user-friendly UI
-
----
-
-## 📁 Project Structure
+## 🗂️ Folder Structure
 
 ```
-AI_FORM_GENERATOR/
-├── app/                    # Next.js app directory
-│   ├── dashboard/          # Dashboard pages
-│   ├── success/            # Success page
-├── components/             # Reusable UI components
-│   ├── AiGeneratedForm.tsx
-│   ├── Analytics.tsx
-│   ├── FormList.tsx
-│   ├── FormPublishDialog.tsx
-│   ├── Header.tsx
-│   ├── Sidebar.tsx
-│   ├── SubmissionsDetails.tsx
-│   ├── UpgradeButton.tsx
-│   ├── theme-provider.tsx
-│   └── ui/                 # UI components
-├── actions/                # Server-side actions
-│   ├── deleteForm.ts
-│   ├── formStats.ts
-│   ├── generatorForm.ts
-│   ├── getForms.ts
-│   ├── publishForm.ts
-│   ├── submitForm.ts
-│   └── userSubscription.ts
-├── lib/                    # Prisma client and utility functions
-├── prisma/                 # Prisma schema & migrations
-├── tailwind.config.js      # Tailwind CSS configuration
-├── types/                  # TypeScript types
-│   └── form.ts
-├── package.json            # Project metadata and dependencies
-└── README.md               # Project documentation
-
+ai_form_generator/
+│
+├── app/                          # Next.js App Router
+│   ├── (home)/                   # Landing page + layout
+│   │   ├── page.tsx              # Home page (Hero, Features, Pricing)
+│   │   └── layout.tsx            # Navbar layout
+│   ├── (auth)/                   # Auth pages (Clerk)
+│   │   ├── sign-in/
+│   │   └── sign-up/
+│   ├── dashboard/                # Protected dashboard
+│   │   ├── page.tsx              # Dashboard home (stats + recent forms)
+│   │   ├── forms/                # My Forms, Form Detail, Edit, Submissions
+│   │   ├── analytics/            # Analytics page
+│   │   ├── upgrade/              # Pricing / upgrade page
+│   │   └── layout.tsx            # Dashboard layout (Sidebar + Header)
+│   ├── forms/[formId]/           # Public form fill page
+│   ├── success/                  # Success page (payment / submission)
+│   ├── not-found.tsx             # 404 page
+│   └── layout.tsx                # Root layout (theme provider, toaster)
+│
+├── actions/                      # Next.js Server Actions
+│   ├── generatorForm.ts          # AI form generation (Groq)
+│   ├── getForms.ts               # Fetch user's forms
+│   ├── publishForm.ts            # Publish a form
+│   ├── submitForm.ts             # Submit a form response
+│   ├── deleteForm.ts             # Delete a form
+│   ├── formStats.ts              # Dashboard statistics
+│   └── userSubscription.ts      # Subscription status check
+│
+├── components/                   # Reusable React components
+│   ├── AiGeneratedForm.tsx       # Dynamic form renderer with Formik+Yup validation
+│   ├── GenerateFormInput.tsx     # AI prompt input with validation
+│   ├── FormPublishDialog.tsx     # Publish success dialog with shareable link
+│   ├── FormList.tsx              # Form card with delete confirmation dialog
+│   ├── CopyButton.tsx            # Copy-to-clipboard button (resolves URL dynamically)
+│   ├── HeroSection.tsx           # Landing page hero
+│   ├── Analytics.tsx             # Analytics metric cards
+│   ├── Sidebar.tsx               # Dashboard sidebar navigation
+│   ├── Header.tsx                # Dashboard header with breadcrumb
+│   ├── PricingPage.tsx           # Pricing cards with Razorpay integration
+│   ├── Footer.tsx                # Landing page footer
+│   ├── UpgradeButton.tsx         # Free tier upgrade prompt
+│   └── ui/                       # shadcn/ui components
+│
+├── prisma/
+│   ├── schema.prisma             # Database schema (Form, Submissions, Subscription)
+│   └── migrations/               # Prisma migration files
+│
+├── lib/
+│   ├── prisma.ts                 # Prisma client singleton
+│   ├── utils.ts                  # Utility functions + MAX_FREE_FORM constant
+│   └── pricingplan.ts            # Pricing plan config
+│
+├── types/
+│   └── form.ts                   # TypeScript types for form fields
+│
+├── middleware.ts                 # Clerk middleware (public routes config)
+├── .env                          # Local env (not committed)
+├── .env.example                  # Env template ← copy this
+├── next.config.ts                # Next.js config
+├── tailwind.config.ts            # Tailwind CSS config
+├── package.json
+└── README.md
 ```
+
+---
 
 ## 🏁 Getting Started
 
-Follow these steps to run the project locally:
+### Prerequisites
 
-1. **Clone the repository:**
+Make sure you have the following:
 
+- [Node.js](https://nodejs.org/) v18+
+- [npm](https://www.npmjs.com/) v9+
+- [Supabase](https://supabase.com/) account (free tier works)
+- [Clerk](https://clerk.dev/) account (free tier works)
+- [Groq API Key](https://console.groq.com/) (free tier available)
+- [Razorpay](https://razorpay.com/) account (for payment integration)
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/singhayush007/ai_form_generator.git
+cd ai_form_generator
 ```
-git clone https://github.com/singhayush007/AI_FORM_GENERATOR.git
-```
 
-2. **Navigate to the project folder:**
+### 2. Install dependencies
 
-```
-cd AI_FORM_GENERATOR
-```
-
-3. **Install dependencies:**
-
-```
+```bash
 npm install
 ```
 
-4. **Create a .env.local file in the root and add your environment variables:**
+### 3. Set up environment variables
 
-```
-DATABASE_URL=your_supabase_database_url
-DIRECT_URL=your_supabase_direct_url
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
-CLERK_SECRET_KEY=your_clerk_secret_key
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
-NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
-OPENROUTER_API_KEY=your_openrouter_api_key
-NEXT_PUBLIC_RAZORPAY_KEY_ID=your_razorpay_key_id
-RAZORPAY_KEY_SECRET=your_razorpay_key_secret
-NEXT_PUBLIC_BASE_URL=http://localhost:3000
+```bash
+cp .env.example .env
 ```
 
-5. **Run the development server:**
+Fill in your values in `.env` (see [Environment Variables](#-environment-variables) below).
 
+### 4. Set up the database
+
+```bash
+# Run Prisma migrations to create the tables in Supabase
+npx prisma migrate deploy
+
+# Generate the Prisma client
+npx prisma generate
 ```
+
+---
+
+## 🔐 Environment Variables
+
+Copy `.env.example` to `.env` and fill in your values:
+
+```bash
+cp .env.example .env
+```
+
+| Variable | Description |
+| --- | --- |
+| `DATABASE_URL` | Supabase connection pooling URL (port 6543, `?pgbouncer=true`) |
+| `DIRECT_URL` | Supabase direct connection URL (port 5432, used for migrations) |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk publishable key from your Clerk dashboard |
+| `CLERK_SECRET_KEY` | Clerk secret key from your Clerk dashboard |
+| `NEXT_PUBLIC_CLERK_SIGN_IN_URL` | Sign-in route — set to `/sign-in` |
+| `NEXT_PUBLIC_CLERK_SIGN_UP_URL` | Sign-up route — set to `/sign-up` |
+| `NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL` | Redirect after sign-in — set to `/` |
+| `NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL` | Redirect after sign-up — set to `/` |
+| `GROQ_API_KEY` | Groq API key — get it from [console.groq.com](https://console.groq.com/) |
+| `NEXT_PUBLIC_RAZORPAY_KEY_ID` | Razorpay public key ID (from Razorpay dashboard) |
+| `RAZORPAY_KEY_SECRET` | Razorpay secret key (server-side only) |
+| `NEXT_PUBLIC_BASE_URL` | App base URL — `http://localhost:3000` locally, your Vercel URL in production |
+
+---
+
+## ▶️ Running the App
+
+```bash
 npm run dev
 ```
 
-6. **Open the app in your browser:**
+Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
-```
-http://localhost:3000
-```
+---
 
-## 💻 Deployment
+## ☁️ Deployment
 
-You can deploy this app using Vercel, Docker, or any Node.js hosting platform.
+This project is optimized for deployment on **Vercel**.
 
-**🐳Docker**
+| Service | Recommended For |
+| --- | --- |
+| [Vercel](https://vercel.com) | Full-stack Next.js app (frontend + server actions) |
+| [Supabase](https://supabase.com) | PostgreSQL database |
+| [Clerk](https://clerk.dev) | Authentication |
+| [Groq](https://console.groq.com) | AI form generation |
+| [Razorpay](https://razorpay.com) | Payment gateway |
 
-1. **Build the Docker image:**
+### Deploy to Vercel
 
-```
-docker build -t ai-form-generator .
-```
+1. Push your repository to GitHub
+2. Import the repo at [vercel.com/new](https://vercel.com/new)
+3. Add all environment variables from `.env.example` in the Vercel dashboard
+4. Set `NEXT_PUBLIC_BASE_URL` to your Vercel deployment URL (e.g. `https://yourapp.vercel.app`)
+5. Deploy!
 
-2. **Run the container:**
+> **Important:** After deploying, run `npx prisma migrate deploy` against your Supabase production DB if you haven't already, or use Vercel's build command to run it automatically.
 
-```
-docker run -p 3000:3000 ai-form-generator
-```
+---
 
-## 📄License
+## 🤝 Contributing
 
-This project is licensed under the MIT License.
+Contributions are welcome! Here's how to get started:
+
+1. Fork the repository
+2. Create a new branch: `git checkout -b feature/your-feature-name`
+3. Commit your changes: `git commit -m 'add: your feature description'`
+4. Push to the branch: `git push origin feature/your-feature-name`
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** — feel free to use and modify it as per your needs.
+
+---
+
+<div align="center">
+  Made with ❤️ by <a href="https://github.com/singhayush007">Ayush Singh</a>
+</div>

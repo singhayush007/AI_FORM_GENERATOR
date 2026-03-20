@@ -1,68 +1,72 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { ChartSpline, ClipboardList } from "lucide-react";
-import { useTheme } from "next-themes";
+import React from "react";
+import {
+  ChartSpline,
+  ClipboardList,
+  Home,
+  CreditCard,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const sidebarItems = [
-  { title: "Analytics", url: "/dashboard/analytics", icon: <ChartSpline /> },
-  { title: "My Forms", url: "/dashboard/forms", icon: <ClipboardList /> },
+  { title: "Home", url: "/dashboard", icon: Home, exact: true },
+  { title: "My Forms", url: "/dashboard/forms", icon: ClipboardList, exact: false },
+  { title: "Analytics", url: "/dashboard/analytics", icon: ChartSpline, exact: false },
+  { title: "Upgrade", url: "/dashboard/upgrade", icon: CreditCard, exact: false },
 ];
 
 const DashboardSidebar = () => {
   const pathname = usePathname();
-  const { theme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
-
-  if (!mounted) return null;
 
   return (
-    <aside
-      className={`w-60 p-4 flex-shrink-0 transition-colors duration-300 ${
-        theme === "dark"
-          ? "bg-neutral-900 text-gray-200"
-          : "bg-gray-50 text-gray-800"
-      }`}
-    >
+    <aside className="w-56 shrink-0 flex flex-col border-r border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 min-h-screen">
       {/* Logo */}
-      <Link href="/">
-        <h2
-          className="text-2xl font-extrabold mb-4 cursor-pointer
-                     bg-clip-text text-transparent
-                     bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500
-                     hover:scale-105 transition-transform duration-300"
-        >
-          Formify.ai
-        </h2>
-      </Link>
+      <div className="px-5 py-5 border-b border-gray-100 dark:border-neutral-800">
+        <Link href="/">
+          <span className="text-xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 cursor-pointer">
+            Formify.ai
+          </span>
+        </Link>
+      </div>
 
-      {/* Sidebar Items */}
-      <nav className="flex flex-col gap-2">
-        {sidebarItems.map((item, index) => {
-          const isActive = pathname?.startsWith(item.url);
+      {/* Nav Items */}
+      <nav className="flex flex-col gap-1 px-3 py-4 flex-1">
+        {sidebarItems.map((item) => {
+          const isActive = item.exact
+            ? pathname === item.url
+            : pathname.startsWith(item.url);
+          const Icon = item.icon;
           return (
             <Link
-              key={index}
+              key={item.url}
               href={item.url}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all duration-200 ${
+              className={cn(
+                "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150",
                 isActive
-                  ? theme === "dark"
-                    ? "bg-gray-800 text-white font-semibold shadow-inner hover:brightness-110"
-                    : "bg-gray-100 text-gray-800 font-semibold shadow-sm hover:brightness-105"
-                  : theme === "dark"
-                  ? "text-gray-200 hover:bg-gray-700 hover:text-white hover:brightness-105"
-                  : "text-gray-700 hover:bg-gray-200 hover:text-gray-900 hover:brightness-105"
-              }`}
+                  ? "bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300"
+                  : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-neutral-800 hover:text-gray-900 dark:hover:text-gray-100"
+              )}
             >
-              {item.icon}
-              <span>{item.title}</span>
+              <Icon
+                className={cn(
+                  "w-4 h-4 shrink-0",
+                  isActive ? "text-blue-600 dark:text-blue-400" : "text-gray-400 dark:text-gray-500"
+                )}
+              />
+              {item.title}
             </Link>
           );
         })}
       </nav>
+
+      {/* Bottom hint */}
+      <div className="px-5 py-4 border-t border-gray-100 dark:border-neutral-800">
+        <p className="text-xs text-gray-400 dark:text-gray-600">
+          Formify.ai &copy; {new Date().getFullYear()}
+        </p>
+      </div>
     </aside>
   );
 };

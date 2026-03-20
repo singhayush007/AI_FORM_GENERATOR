@@ -26,13 +26,12 @@ const UpgradeButton: React.FC<Props> = async ({ userId }) => {
         <>
           <Progress value={percentage} />
           <p>
-            2 out of 3 forms generated.{" "}
+            {formsGenerated ?? 0} out of {MAX_FREE_FORM} forms generated.{" "}
             <Link
               href={"/dashboard/upgrade"}
               className="text-blue-600 underline"
             >
-              {" "}
-              Upgrade{" "}
+              Upgrade
             </Link>{" "}
             to generate more forms
           </p>

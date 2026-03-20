@@ -1,9 +1,11 @@
 "use client";
 
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { Input } from "./ui/input";
+import React, { useEffect } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import { Button } from "./ui/button";
-import { Lock, Sparkles } from "lucide-react";
+import { Input } from "./ui/input";
+import { Lock, Sparkles, Loader2, AlertCircle } from "lucide-react";
 import { generateForm } from "@/actions/generatorForm";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -13,75 +15,125 @@ type Props = {
   text?: string;
   totalForms?: number;
   isSubscribed?: boolean;
+  variant?: "hero" | "default";
 };
+
+const validationSchema = Yup.object({
+  description: Yup.string()
+    .min(10, "Please describe your form in at least 10 characters")
+    .max(500, "Description must be under 500 characters")
+    .required("Please describe the form you want to generate"),
+});
 
 const GenerateFormInput: React.FC<Props> = ({
   text,
   totalForms = 0,
   isSubscribed = true,
+  variant = "default",
 }) => {
-  const [description, setDescription] = useState<string>("");
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const isHero = variant === "hero";
+  const canGenerate = isSubscribed || totalForms < MAX_FREE_FORM;
 
-  useEffect(() => setDescription(text || ""), [text]);
+  const formik = useFormik({
+    initialValues: { description: text || "" },
+    validationSchema,
+    validateOnBlur: true,
+    validateOnChange: false,
+    onSubmit: async (values, { setSubmitting, resetForm }) => {
+      const formData = new FormData();
+      formData.append("description", values.description);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+      const result = await generateForm(null, formData);
+      setSubmitting(false);
 
-    const formData = new FormData();
-    formData.append("description", description);
+      if (result.success) {
+        toast.success(result.message);
+        resetForm();
+        router.push(`/dashboard/forms/edit/${result.data?.id}`);
+      } else {
+        toast.error(result.message || "Error generating form");
+      }
+    },
+  });
 
-    const result = await generateForm(null, formData);
+  useEffect(() => {
+    if (text) formik.setFieldValue("description", text);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text]);
 
-    setLoading(false);
-
-    if (result.success) {
-      toast.success(result.message);
-      // Clear input
-      setDescription("");
-      // Redirect to edit page
-      router.push(`/dashboard/forms/edit/${result.data.id}`);
-    } else {
-      toast.error(result.message || "Error generating form");
-    }
-  };
-
-  const canGenerate = isSubscribed && totalForms <= MAX_FREE_FORM;
+  const hasError = formik.touched.description && formik.errors.description;
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-center gap-4 my-8">
-      <Input
-        id="description"
-        name="description"
-        value={description}
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setDescription(e.target.value)
-        }
-        type="text"
-        placeholder="Write a prompt to generate form..."
-        required
-      />
-      {canGenerate ? (
-        <Button
-          type="submit"
-          disabled={loading}
-          className="h-12 bg-gradient-to-r from-blue-500 to-purple-600 cursor-pointer hover:opacity-90 transition-all flex items-center gap-2"
+    <div className="w-full space-y-1.5">
+      <form onSubmit={formik.handleSubmit} className="flex items-center gap-2 w-full">
+        {isHero ? (
+          <input
+            id="description"
+            name="description"
+            value={formik.values.description}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            type="text"
+            placeholder="e.g. Create a job application form with 5 fields..."
+            className={`flex-1 h-11 px-4 rounded-xl bg-white/20 backdrop-blur-sm border text-white placeholder:text-white/60 outline-none focus:bg-white/25 transition-all text-sm ${
+              hasError
+                ? "border-red-400 focus:border-red-400"
+                : "border-white/30 focus:border-white/60"
+            }`}
+          />
+        ) : (
+          <Input
+            id="description"
+            name="description"
+            value={formik.values.description}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            type="text"
+            placeholder="e.g. Create a job application form with 5 fields..."
+            className={`flex-1 h-11 ${hasError ? "border-red-400 focus-visible:ring-red-400" : ""}`}
+          />
+        )}
+
+        {canGenerate ? (
+          <Button
+            type="submit"
+            disabled={formik.isSubmitting}
+            className={`h-11 px-5 cursor-pointer transition-all flex items-center gap-2 font-semibold rounded-xl shrink-0 ${
+              isHero
+                ? "bg-white text-blue-700 hover:bg-blue-50"
+                : "bg-blue-600 hover:bg-blue-700 text-white"
+            }`}
+          >
+            {formik.isSubmitting ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <Sparkles className="w-4 h-4" />
+            )}
+            {formik.isSubmitting ? "Generating..." : "Generate"}
+          </Button>
+        ) : (
+          <Button
+            disabled
+            className="h-11 px-5 flex items-center gap-2 bg-gray-300 text-gray-500 cursor-not-allowed rounded-xl shrink-0"
+          >
+            <Lock className="w-4 h-4" />
+            Upgrade
+          </Button>
+        )}
+      </form>
+
+      {hasError && (
+        <div
+          className={`flex items-center gap-1.5 text-xs ${
+            isHero ? "text-red-300" : "text-red-500"
+          }`}
         >
-          <Sparkles className="mr-2" />
-          {loading ? "Generating..." : "Generate Form"}
-        </Button>
-      ) : (
-        <Button
-          disabled
-          className="h-12 flex items-center gap-2 bg-gray-400 cursor-not-allowed hover:bg-gray-400"
-        >
-          <Lock />
-          Upgrade Plan
-        </Button>
+          <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+          {formik.errors.description}
+        </div>
       )}
-    </form>
+    </div>
   );
 };
 

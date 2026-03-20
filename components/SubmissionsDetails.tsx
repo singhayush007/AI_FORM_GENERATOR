@@ -9,7 +9,8 @@ import {
 } from "./ui/table";
 
 type Props = {
-  submission: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  submission: { content: any };
   index: number;
 };
 

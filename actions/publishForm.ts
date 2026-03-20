@@ -23,7 +23,7 @@ export const publishForm = async (formId: number) => {
     if (form.ownerId !== user.id) {
       return { success: false, message: "Unauthorized" };
     }
-    await prisma.form.update({
+    const updated = await prisma.form.update({
       where: {
         id: formId,
       },
@@ -31,6 +31,7 @@ export const publishForm = async (formId: number) => {
         published: true,
       },
     });
+    return { success: true, shareUrl: updated.shareUrl };
   } catch (error) {
     console.log("Error publishing form", error);
     return {

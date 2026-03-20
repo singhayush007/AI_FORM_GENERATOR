@@ -2,7 +2,6 @@
 
 import prisma from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs/server";
-import { useSession } from "@clerk/nextjs";
 
 export const getForms = async () => {
   try {
