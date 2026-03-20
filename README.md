@@ -10,7 +10,7 @@
 
 **A production-ready full-stack AI-powered Form Builder SaaS using Next.js 15, Groq AI (Llama 3.3), Supabase, Clerk Auth, and Razorpay.**
 
-[🌐 Live Demo](https://ai-form-generator-five-mu.vercel.app) · [🐛 Report Bug](https://github.com/singhayush007/AI_FORM_GENERATOR/issues) · [✨ Request Feature](https://github.com/singhayush007/AI_FORM_GENERATOR/issues)
+[🌐 Live Demo](https://ai-fullstack-form-generator.vercel.app) · [🐛 Report Bug](https://github.com/singhayush007/AI_FORM_GENERATOR/issues) · [✨ Request Feature](https://github.com/singhayush007/AI_FORM_GENERATOR/issues)
 
 </div>
 
