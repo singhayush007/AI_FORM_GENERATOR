@@ -9,9 +9,10 @@ import { notFound } from "next/navigation";
 export default async function SubmissionsPage({
   params,
 }: {
-  params: { formId: string };
+  params: Promise<{ formId: string }>;
 }) {
-  const formId = Number(params.formId);
+  const { formId: formIdStr } = await params;
+  const formId = Number(formIdStr);
 
   const form = await prisma.form.findUnique({ where: { id: formId } });
   if (!form) return notFound();

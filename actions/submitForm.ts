@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 
-export const submitForm = async (formId: number, formData: Record<string, unknown>) => {
+export const submitForm = async (formId: number, formData: Record<string, string>) => {
   try {
     if (!formId || !formData) {
       return { success: false, message: "Invalid form data" };

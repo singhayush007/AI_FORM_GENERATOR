@@ -30,7 +30,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
                     Dashboard
                   </Button>
                 </Link>
-                <UserButton afterSignOutUrl="/" />
+                <UserButton />
               </>
             ) : (
               <>

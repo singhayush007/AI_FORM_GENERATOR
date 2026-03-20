@@ -36,7 +36,7 @@ const Header = () => {
       </div>
       <div className="flex items-center gap-3">
         <DarkMode />
-        <UserButton afterSignOutUrl="/" />
+        <UserButton />
       </div>
     </header>
   );
