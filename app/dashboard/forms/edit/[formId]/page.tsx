@@ -1,4 +1,4 @@
-import AiGeneratedForm from "@/components/AiGeneratedForm";
+import AiGeneratedForm from "@/features/forms/components/AiGeneratedForm";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

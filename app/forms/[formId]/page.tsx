@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import AiGeneratedForm from "@/components/AiGeneratedForm";
+import AiGeneratedForm from "@/features/forms/components/AiGeneratedForm";
 import { notFound } from "next/navigation";
 import { FileText } from "lucide-react";
 

@@ -1,5 +1,5 @@
 import { getFormStats } from "@/actions/formStats";
-import Analytics from "@/components/Analytics";
+import Analytics from "@/features/dashboard/components/Analytics";
 import React from "react";
 
 const AnalyticsPage = async () => {

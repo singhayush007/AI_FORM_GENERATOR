@@ -12,9 +12,7 @@ export const generateForm = async (_prev: unknown, formData: FormData) => {
     if (!user) return { success: false, message: "User not found" };
 
     const schema = z.object({ description: z.string().min(1) });
-    const result = schema.safeParse({
-      description: formData.get("description"),
-    });
+    const result = schema.safeParse({ description: formData.get("description") });
     if (!result.success)
       return { success: false, message: "Invalid data", error: result.error.issues };
 
@@ -80,8 +78,7 @@ Output STRICTLY in JSON format only. No markdown, no backticks, no extra text.
     let json;
     try {
       json = JSON.parse(cleaned);
-    } catch (e) {
-      console.error("⚠️ Invalid JSON from AI:", cleaned);
+    } catch {
       return { success: false, message: "Invalid JSON response from AI. Please try again." };
     }
 
@@ -101,8 +98,8 @@ Output STRICTLY in JSON format only. No markdown, no backticks, no extra text.
       formId: form.id,
       data: form,
     };
-  } catch (err: any) {
-    console.error("❌ Error generating form:", err?.message || err);
-    return { success: false, message: "Error generating form. Please try again." };
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    return { success: false, message: `Error generating form: ${message}` };
   }
 };

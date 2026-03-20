@@ -1,4 +1,4 @@
-import PricingPage from "@/components/PricingPage";
+import PricingPage from "@/features/billing/components/PricingPage";
 import { currentUser } from "@clerk/nextjs/server";
 import React from "react";
 

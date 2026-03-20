@@ -1,5 +1,5 @@
 import { getForms } from "@/actions/getForms";
-import FormList from "@/components/FormList";
+import FormList from "@/features/forms/components/FormList";
 import GenerateFormInput from "@/components/GenerateFormInput";
 import { Button } from "@/components/ui/button";
 import {

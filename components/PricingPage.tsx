@@ -61,7 +61,6 @@ const PricingPage: React.FC<Props> = ({ userId }) => {
       const rzp = new RazorpayClass(options);
       rzp.open();
     } catch (error) {
-      console.error("Payment error:", error);
       toast.error("Something went wrong while creating order");
     }
   };

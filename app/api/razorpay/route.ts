@@ -9,12 +9,10 @@ export async function POST(req: Request) {
     const { amount, currency, plan } = body;
 
     if (!process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
-      console.error("❌ Missing Razorpay keys in .env");
       return NextResponse.json({ error: "Missing Razorpay keys" }, { status: 500 });
     }
 
     if (!amount || amount < 1) {
-      console.error("❌ Invalid amount:", amount);
       return NextResponse.json({ error: "Invalid payment amount" }, { status: 400 });
     }
 
@@ -31,12 +29,8 @@ export async function POST(req: Request) {
     };
 
     const order = await razorpay.orders.create(options);
-    console.log("✅ Razorpay order created:", order);
     return NextResponse.json(order);
-  } catch (error: unknown) {
-    console.error("❌ Razorpay Order Error:", error);
+  } catch {
     return NextResponse.json({ error: "Failed to create order" }, { status: 500 });
   }
 }
-
-

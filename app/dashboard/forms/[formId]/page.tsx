@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import CopyButton from "@/components/CopyButton";
+import CopyButton from "@/features/forms/components/CopyButton";
 import {
   Edit2,
   ExternalLink,

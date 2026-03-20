@@ -1,6 +1,6 @@
-import Footer from "@/components/Footer";
-import HeroSection from "@/components/HeroSection";
-import PricingPage from "@/components/PricingPage";
+import Footer from "@/features/landing/components/Footer";
+import HeroSection from "@/features/landing/components/HeroSection";
+import PricingPage from "@/features/billing/components/PricingPage";
 import { currentUser } from "@clerk/nextjs/server";
 import { FileText, Zap, Users, BarChart3, Shield, Globe } from "lucide-react";
 import React from "react";

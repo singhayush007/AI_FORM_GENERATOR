@@ -19,8 +19,7 @@ export async function getFormStats() {
     const totalSubmissions = forms.reduce((acc, f) => acc + f.submissions, 0);
 
     return { totalForms, publishedForms, draftForms, totalSubmissions };
-  } catch (error) {
-    console.error("Prisma query failed:", error);
+  } catch {
     return { totalForms: 0, publishedForms: 0, draftForms: 0, totalSubmissions: 0 };
   }
 }

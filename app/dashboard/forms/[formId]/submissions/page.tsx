@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import SubmissionsDetails from "@/components/SubmissionsDetails";
+import SubmissionsDetails from "@/features/dashboard/components/SubmissionsDetails";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
