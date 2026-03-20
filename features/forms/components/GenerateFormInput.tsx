@@ -3,10 +3,10 @@
 import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Lock, Sparkles, Loader2, AlertCircle } from "lucide-react";
-import { generateForm } from "@/actions/generatorForm";
+import { generateForm } from "@/features/forms/actions/generateForm";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { MAX_FREE_FORM } from "@/lib/utils";
@@ -124,11 +124,7 @@ const GenerateFormInput: React.FC<Props> = ({
       </form>
 
       {hasError && (
-        <div
-          className={`flex items-center gap-1.5 text-xs ${
-            isHero ? "text-red-300" : "text-red-500"
-          }`}
-        >
+        <div className={`flex items-center gap-1.5 text-xs ${isHero ? "text-red-300" : "text-red-500"}`}>
           <AlertCircle className="w-3.5 h-3.5 shrink-0" />
           {formik.errors.description}
         </div>

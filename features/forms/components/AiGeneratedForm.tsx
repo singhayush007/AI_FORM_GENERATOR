@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Loader2, Send, Globe, AlertCircle } from "lucide-react";
-import { submitForm } from "@/actions/submitForm";
+import { submitForm } from "@/features/forms/actions/submitForm";
 import { useFormPublish } from "@/features/forms/hooks/useFormPublish";
 import FormPublishDialog from "@/features/forms/components/FormPublishDialog";
 import type { Fields } from "@/features/forms/types";

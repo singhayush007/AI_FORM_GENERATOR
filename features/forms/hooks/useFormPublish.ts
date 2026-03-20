@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { publishForm } from "@/actions/publishForm";
+import { publishForm } from "@/features/forms/actions/publishForm";
 
 export function useFormPublish(formId: number) {
   const [loading, setLoading] = useState(false);

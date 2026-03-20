@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import GenerateFormInput from "@/components/GenerateFormInput";
+import GenerateFormInput from "@/features/forms/components/GenerateFormInput";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Zap, Shield, BarChart3 } from "lucide-react";
 

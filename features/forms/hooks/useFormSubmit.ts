@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { submitForm } from "@/actions/submitForm";
+import { submitForm } from "@/features/forms/actions/submitForm";
 import type { Fields, FormContent } from "@/features/forms/types";
 
 type UseFormSubmitProps = {

@@ -1,8 +1,8 @@
 import Link from "next/link";
 import React from "react";
 import { Progress } from "@/components/ui/progress";
-import { getForms } from "@/actions/getForms";
-import { getUserSubscription } from "@/actions/userSubscription";
+import { getForms } from "@/features/forms/actions/getForms";
+import { getUserSubscription } from "@/features/billing/actions/userSubscription";
 import { MAX_FREE_FORM } from "@/lib/utils";
 
 type Props = { userId: string | undefined };

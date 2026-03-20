@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { generateForm } from "@/actions/generatorForm";
+import { generateForm } from "@/features/forms/actions/generateForm";
 import { MAX_FREE_FORM } from "@/lib/utils";
 
 type UseFormGenerateProps = {

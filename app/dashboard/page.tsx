@@ -1,6 +1,6 @@
 import React from "react";
-import { getFormStats } from "@/actions/formStats";
-import { getForms } from "@/actions/getForms";
+import { getFormStats } from "@/features/dashboard/actions/formStats";
+import { getForms } from "@/features/forms/actions/getForms";
 import { currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";

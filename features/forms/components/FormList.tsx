@@ -10,7 +10,7 @@ import {
 import { Edit2, Trash2, Users, Globe, Lock, Eye, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { deleteForm } from "@/actions/deleteForm";
+import { deleteForm } from "@/features/forms/actions/deleteForm";
 import toast from "react-hot-toast";
 import type { Form } from "@/features/forms/types";
 

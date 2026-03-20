@@ -48,8 +48,6 @@ Example format:
     { "label": "Full Name", "name": "full_name", "placeholder": "Enter your full name", "type": "text" },
     { "label": "Email", "name": "email", "placeholder": "Enter your email address", "type": "email" },
     { "label": "Gender", "name": "gender", "placeholder": "Select your gender", "type": "select", "options": ["Male", "Female", "Non-binary", "Prefer not to say"] },
-    { "label": "Experience Level", "name": "experience_level", "placeholder": "Select experience level", "type": "select", "options": ["Fresher", "Junior (1-2 years)", "Mid-level (3-5 years)", "Senior (5+ years)"] },
-    { "label": "Employment Type", "name": "employment_type", "placeholder": "Select employment type", "type": "select", "options": ["Full-time", "Part-time", "Contract", "Internship", "Freelance"] },
     { "label": "Resume", "name": "resume", "placeholder": "Upload your resume (PDF)", "type": "file" },
     { "label": "Cover Letter", "name": "cover_letter", "placeholder": "Write your cover letter", "type": "textarea" }
   ]

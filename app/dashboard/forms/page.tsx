@@ -1,6 +1,6 @@
-import { getForms } from "@/actions/getForms";
+import { getForms } from "@/features/forms/actions/getForms";
 import FormList from "@/features/forms/components/FormList";
-import GenerateFormInput from "@/components/GenerateFormInput";
+import GenerateFormInput from "@/features/forms/components/GenerateFormInput";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
