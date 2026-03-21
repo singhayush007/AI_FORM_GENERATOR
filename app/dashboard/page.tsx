@@ -12,6 +12,7 @@ import {
   Users,
   Plus,
   ArrowRight,
+  Sparkles,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
@@ -64,21 +65,28 @@ const DashboardHome = async () => {
   return (
     <div className="max-w-5xl mx-auto space-y-8">
       {/* Greeting */}
-      <div className="flex items-center justify-between flex-wrap gap-4">
-        <div>
-          <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100">
-            Hey, {firstName} 👋
-          </h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
-            Here&apos;s an overview of your form activity.
-          </p>
+      <div className="pb-6 border-b border-gray-100 dark:border-neutral-800 flex flex-col items-center text-center">
+        <div className="flex items-center justify-center gap-2 mb-3">
+          <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full bg-green-50 dark:bg-green-950 text-green-600 dark:text-green-400 border border-green-100 dark:border-green-900">
+            <Sparkles className="w-3 h-3" />
+            Welcome Back
+          </span>
         </div>
-        <Link href="/dashboard/forms">
-          <Button className="gap-2 bg-blue-600 hover:bg-blue-700 text-white cursor-pointer">
-            <Plus className="w-4 h-4" />
-            Create Form
-          </Button>
-        </Link>
+        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-gray-900 via-green-800 to-green-600 dark:from-gray-100 dark:via-green-300 dark:to-green-400 bg-clip-text text-transparent leading-tight">
+          Hey, {firstName} 👋
+        </h1>
+        <p className="mt-2 text-sm sm:text-base text-gray-500 dark:text-gray-400 max-w-lg leading-relaxed">
+          Here&apos;s an overview of your form activity.{" "}
+          <span className="text-gray-700 dark:text-gray-300 font-medium">Build, publish, and track — all from one place.</span>
+        </p>
+        <div className="mt-5">
+          <Link href="/dashboard/forms">
+            <Button className="gap-2 bg-blue-600 hover:bg-blue-700 text-white cursor-pointer">
+              <Plus className="w-4 h-4" />
+              Create Form
+            </Button>
+          </Link>
+        </div>
       </div>
 
       {/* Stats Grid */}
