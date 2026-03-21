@@ -1,10 +1,12 @@
-import prisma from "@/lib/prisma";
+import { notFound } from "next/navigation";
 import SubmissionsDetails from "@/features/dashboard/components/SubmissionsDetails";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Users, Calendar } from "lucide-react";
-import { notFound } from "next/navigation";
+import { getFormById } from "@/features/forms/actions/getFormById";
+import { getFormSubmissions } from "@/features/forms/actions/getFormSubmissions";
+import { parseFormContent, getFormTitle, formatDateTime } from "@/features/forms/utils/formUtils";
 
 export default async function SubmissionsPage({
   params,
@@ -14,28 +16,18 @@ export default async function SubmissionsPage({
   const { formId: formIdStr } = await params;
   const formId = Number(formIdStr);
 
-  const form = await prisma.form.findUnique({ where: { id: formId } });
+  const [form, submissions] = await Promise.all([
+    getFormById(formId),
+    getFormSubmissions(formId),
+  ]);
+
   if (!form) return notFound();
 
-  const submissions = await prisma.submissions.findMany({
-    where: { formId },
-    orderBy: { createdAt: "desc" },
-  });
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const content: any =
-    typeof form.content !== "object"
-      ? JSON.parse(form.content as string)
-      : form.content;
-
-  const title: string =
-    content?.formTitle ||
-    (Array.isArray(content) ? content[0]?.formTitle : "") ||
-    "Untitled Form";
+  const content = parseFormContent(form.content);
+  const title = getFormTitle(content);
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
-      {/* Back */}
       <Link href={`/dashboard/forms/${formId}`}>
         <Button variant="ghost" size="sm" className="gap-2 cursor-pointer -ml-2">
           <ArrowLeft className="w-4 h-4" />
@@ -43,7 +35,6 @@ export default async function SubmissionsPage({
         </Button>
       </Link>
 
-      {/* Header */}
       <div className="flex items-start justify-between flex-wrap gap-4">
         <div>
           <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100">
@@ -59,7 +50,6 @@ export default async function SubmissionsPage({
         </Badge>
       </div>
 
-      {/* Submissions List */}
       {submissions.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 border border-dashed border-gray-300 dark:border-neutral-700 rounded-2xl text-center">
           <Users className="w-12 h-12 text-gray-300 dark:text-gray-600 mb-4" />
@@ -77,24 +67,15 @@ export default async function SubmissionsPage({
               key={s.id}
               className="bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-2xl overflow-hidden shadow-sm"
             >
-              {/* Submission header */}
               <div className="flex items-center justify-between px-3 sm:px-5 py-3 border-b border-gray-100 dark:border-neutral-800 bg-gray-50 dark:bg-neutral-800/50">
                 <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                   Response #{submissions.length - index}
                 </span>
                 <span className="text-xs text-gray-400 dark:text-gray-500 flex items-center gap-1.5">
                   <Calendar className="w-3.5 h-3.5" />
-                  {new Date(s.createdAt).toLocaleDateString("en-IN", {
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
+                  {formatDateTime(s.createdAt)}
                 </span>
               </div>
-
-              {/* Content */}
               <div className="p-3 sm:p-5">
                 <SubmissionsDetails submission={s} index={index} />
               </div>

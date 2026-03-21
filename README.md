@@ -88,99 +88,131 @@ Once generated, you can publish your form with a single click, share the unique 
 ```
 ai_form_generator/
 │
-├── app/                                    # Next.js App Router — routing ONLY
-│   ├── (auth)/                             # Auth routes (sign-in, sign-up)
-│   ├── (home)/                             # Landing page + layout
-│   ├── dashboard/                          # Protected dashboard routes
-│   │   ├── analytics/page.tsx
-│   │   ├── forms/
-│   │   │   ├── page.tsx
-│   │   │   ├── [formId]/page.tsx
-│   │   │   ├── [formId]/submissions/page.tsx
-│   │   │   └── edit/[formId]/page.tsx
-│   │   ├── upgrade/page.tsx
-│   │   └── layout.tsx
-│   ├── forms/[formId]/page.tsx             # Public shareable form page
-│   ├── api/razorpay/route.ts               # Razorpay payment API
-│   ├── success/page.tsx
+├── app/                                         # Next.js App Router — routing ONLY, no business logic
+│   ├── (auth)/                                  # Clerk auth routes (sign-in, sign-up)
+│   ├── (home)/                                  # Landing page + public layout
+│   │   ├── layout.tsx                           # Nav with conditional auth buttons
+│   │   └── page.tsx                             # Landing page (Hero + Pricing + Footer)
+│   ├── dashboard/                               # Protected dashboard routes
+│   │   ├── page.tsx                             # Dashboard home (stats + recent forms)
+│   │   ├── layout.tsx                           # Dashboard layout (Sidebar + Header)
+│   │   ├── analytics/page.tsx                   # Analytics overview
+│   │   ├── upgrade/page.tsx                     # Plans & pricing page
+│   │   └── forms/
+│   │       ├── page.tsx                         # My Forms list
+│   │       ├── [formId]/page.tsx                # Form detail view
+│   │       ├── [formId]/submissions/page.tsx    # All submissions for a form
+│   │       └── edit/[formId]/page.tsx           # Form edit/publish page
+│   ├── forms/[formId]/page.tsx                  # Public shareable form fill page
+│   ├── api/razorpay/route.ts                    # Razorpay order creation API
+│   ├── success/page.tsx                         # Post-submit/payment success page
 │   ├── not-found.tsx
-│   └── layout.tsx
+│   └── layout.tsx                               # Root layout (Clerk, ThemeProvider, Toasters)
 │
-├── features/                               # 🏗️ Feature-based domain modules
+├── features/                                    # 🏗️ Feature-based domain modules (colocated)
 │   │
-│   ├── forms/                              # Everything related to forms
-│   │   ├── actions/                        # Server actions (colocated)
-│   │   │   ├── generateForm.ts             # AI form generation (Groq)
-│   │   │   ├── submitForm.ts               # Form submission handler
-│   │   │   ├── publishForm.ts              # Publish form to go live
-│   │   │   ├── deleteForm.ts               # Delete form + submissions
-│   │   │   ├── getForms.ts                 # Fetch user's forms
-│   │   │   └── index.ts                    # Barrel export
-│   │   ├── components/
-│   │   │   ├── AiGeneratedForm.tsx         # Dynamic form renderer + Formik validation
-│   │   │   ├── FormList.tsx                # Form card with edit/delete actions
-│   │   │   ├── FormPublishDialog.tsx       # Post-publish share link dialog
-│   │   │   ├── CopyButton.tsx              # Clipboard copy button
-│   │   │   └── GenerateFormInput.tsx       # AI prompt input with validation
-│   │   ├── hooks/
-│   │   │   ├── useFormGenerate.ts          # AI generation state + Formik
-│   │   │   ├── useFormPublish.ts           # Publish flow with loading state
-│   │   │   ├── useFormSubmit.ts            # Form submission + validation
-│   │   │   └── useClipboard.ts             # Clipboard copy with auto-reset
+│   ├── forms/                                   # Everything related to AI form management
+│   │   ├── actions/                             # Next.js Server Actions
+│   │   │   ├── generateForm.ts                  # Groq AI form generation
+│   │   │   ├── submitForm.ts                    # Form response submission
+│   │   │   ├── publishForm.ts                   # Publish form (make live)
+│   │   │   ├── deleteForm.ts                    # Delete form + its submissions
+│   │   │   ├── getForms.ts                      # Fetch all forms for current user
+│   │   │   ├── getFormById.ts                   # Fetch single form (replaces direct prisma)
+│   │   │   ├── getFormSubmissions.ts            # Fetch submissions for a form
+│   │   │   └── index.ts                         # Barrel export
+│   │   ├── components/                          # Pure UI — views only
+│   │   │   ├── AiGeneratedForm.tsx              # Dynamic form renderer (consumes hooks/utils)
+│   │   │   ├── FormFieldInput.tsx               # Renders correct input per field type
+│   │   │   ├── FileUploadField.tsx              # File upload input UI
+│   │   │   ├── InlineFieldError.tsx             # Inline validation error message
+│   │   │   ├── FormSubmitButton.tsx             # Submit / Publish button
+│   │   │   ├── FormList.tsx                     # Form card (uses FormStatusBadge + DeleteFormDialog)
+│   │   │   ├── FormStatusBadge.tsx              # Live / Draft badge
+│   │   │   ├── DeleteFormDialog.tsx             # Delete confirmation alert dialog
+│   │   │   ├── FormPublishDialog.tsx            # Post-publish share link dialog (uses useShareLink)
+│   │   │   ├── CreateFormDialog.tsx             # Reusable AI form creation dialog
+│   │   │   ├── GenerateFormInput.tsx            # AI prompt input (uses GenerateButton)
+│   │   │   ├── GenerateButton.tsx               # Generate / Upgrade locked button
+│   │   │   └── CopyButton.tsx                   # Clipboard copy button (uses useClipboard)
+│   │   ├── hooks/                               # All client-side logic lives here
+│   │   │   ├── useFormGenerate.ts               # AI generation — Formik + action call
+│   │   │   ├── useFormPublish.ts                # Publish flow — loading + dialog state
+│   │   │   ├── useFormSubmit.ts                 # Submission — dynamic Yup schema + Formik
+│   │   │   ├── useShareLink.ts                  # Share URL resolver + clipboard + toast
+│   │   │   └── useClipboard.ts                  # Clipboard copy with copied state / auto-reset
 │   │   ├── types/
-│   │   │   └── index.ts                    # Fields, FormContent, Form types
-│   │   └── index.ts                        # Feature barrel export
+│   │   │   └── index.ts                         # Fields, FormContent, Form TypeScript types
+│   │   ├── utils/
+│   │   │   ├── fieldHelpers.ts                  # getFieldType, getDefaultOptions, buildFieldValidator
+│   │   │   └── formUtils.ts                     # parseFormContent, getFormTitle, getFormFieldCount, formatDate
+│   │   └── index.ts                             # Feature barrel export
 │   │
-│   ├── dashboard/                          # Dashboard stats & navigation
+│   ├── dashboard/                               # Dashboard stats & navigation
 │   │   ├── actions/
-│   │   │   ├── formStats.ts                # Aggregate stats (total, published, drafts)
+│   │   │   ├── formStats.ts                     # Aggregate stats (total, published, drafts, submissions)
 │   │   │   └── index.ts
-│   │   ├── components/
-│   │   │   ├── Analytics.tsx               # Stats cards + conversion rate
-│   │   │   ├── Sidebar.tsx                 # Dashboard sidebar navigation
-│   │   │   ├── Header.tsx                  # Dashboard topbar + breadcrumb
-│   │   │   ├── UpgradeButton.tsx           # Free tier usage progress bar
-│   │   │   └── SubmissionsDetails.tsx      # Submission data table
+│   │   ├── components/                          # Pure UI views
+│   │   │   ├── Analytics.tsx                    # Analytics page (uses MetricCard + ConversionRateBanner)
+│   │   │   ├── MetricCard.tsx                   # Individual stat card
+│   │   │   ├── ConversionRateBanner.tsx         # Conversion rate gradient banner
+│   │   │   ├── Sidebar.tsx                      # Desktop sidebar (uses NavItem + NAV_ITEMS)
+│   │   │   ├── MobileNav.tsx                    # Mobile Sheet drawer nav (uses NavItem + NAV_ITEMS)
+│   │   │   ├── NavItem.tsx                      # Shared nav link with active state
+│   │   │   ├── Header.tsx                       # Dashboard topbar (uses useBreadcrumb)
+│   │   │   ├── UpgradeButton.tsx                # Free-tier usage progress bar (server component)
+│   │   │   └── SubmissionsDetails.tsx           # Submission Q&A table
+│   │   ├── hooks/
+│   │   │   └── useBreadcrumb.ts                 # Resolves route pathname → human-readable label
+│   │   ├── constants/
+│   │   │   └── navItems.ts                      # Shared NAV_ITEMS array (used by Sidebar + MobileNav)
 │   │   └── index.ts
 │   │
-│   ├── billing/                            # Pricing & subscription
+│   ├── billing/                                 # Pricing & payments
 │   │   ├── actions/
-│   │   │   ├── userSubscription.ts         # Create & check subscription
+│   │   │   ├── userSubscription.ts              # Create & verify user subscription
 │   │   │   └── index.ts
 │   │   ├── components/
-│   │   │   └── PricingPage.tsx             # Pricing cards + Razorpay integration
+│   │   │   ├── PricingPage.tsx                  # Grid of pricing cards + Razorpay checkout
+│   │   │   ├── PricingCard.tsx                  # Individual plan card (uses PricingFeatureItem)
+│   │   │   └── PricingFeatureItem.tsx           # Single feature row with check icon
 │   │   └── index.ts
 │   │
-│   └── landing/                            # Marketing / public pages
+│   └── landing/                                 # Public marketing pages
 │       ├── components/
-│       │   ├── HeroSection.tsx             # Hero with AI input + suggestions
-│       │   └── Footer.tsx                  # Footer with newsletter subscribe
+│       │   ├── HeroSection.tsx                  # Hero (uses HeroBackground + HeroStats + sub-components)
+│       │   ├── HeroBackground.tsx               # Animated blobs + grid overlay
+│       │   ├── HeroStats.tsx                    # 10x / 100% / Free stat row
+│       │   ├── SuggestionButtons.tsx            # Quick-fill prompt suggestion pills
+│       │   ├── TrustBadges.tsx                  # Zap / Shield / BarChart trust indicators
+│       │   └── Footer.tsx                       # Footer with brand + newsletter
 │       └── index.ts
 │
-├── components/                             # ✅ Truly shared, cross-feature components
-│   ├── ui/                                 # shadcn/ui (Radix UI) — Button, Card, Dialog…
-│   ├── DarkMode.tsx                        # Light/dark mode toggle
-│   ├── Logo.tsx                            # Brand logo component
-│   └── theme-provider.tsx                  # next-themes provider wrapper
+├── components/                                  # ✅ Truly shared, cross-feature UI
+│   ├── ui/                                      # shadcn/ui primitives (Button, Card, Dialog…)
+│   ├── DarkMode.tsx                             # Direct dark/light toggle (no dropdown)
+│   ├── Logo.tsx                                 # Brand gradient wordmark
+│   └── theme-provider.tsx                       # next-themes ThemeProvider wrapper
 │
-├── lib/                                    # Shared utilities & singletons
-│   ├── prisma.ts                           # Prisma client singleton
-│   ├── utils.ts                            # cn(), MAX_FREE_FORM constant
-│   └── pricingplan.ts                      # Pricing plan definitions
+├── lib/                                         # Shared singletons & config
+│   ├── prisma.ts                                # Prisma client singleton (prevents hot-reload issues)
+│   ├── utils.ts                                 # cn() helper + MAX_FREE_FORM constant
+│   └── pricingplan.ts                           # Pricing plan config (Free / Pro / Enterprise)
 │
 ├── types/
-│   └── form.ts                             # Re-export shim → features/forms/types
+│   └── form.ts                                  # Re-export shim → features/forms/types
 │
 ├── prisma/
-│   └── schema.prisma                       # Database models (Form, Submissions, Subscription)
+│   └── schema.prisma                            # DB schema (Form, Submissions, Subscription models)
 │
 ├── public/
-│   └── ai-form-generator.png               # App screenshot / favicon source
+│   └── ai-form-generator.png                    # App screenshot used in README + favicon
 │
-├── .env.example                            # Environment variable template
-├── .npmrc                                  # legacy-peer-deps=true for Vercel
+├── .env                                         # Local secrets (not committed)
+├── .env.example                                 # Environment variable template (committed)
+├── .npmrc                                       # legacy-peer-deps=true (for Vercel compatibility)
 ├── next.config.ts
-├── tailwind.config.ts
+├── tailwind.config.js
 └── tsconfig.json
 ```
 

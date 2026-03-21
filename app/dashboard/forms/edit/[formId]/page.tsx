@@ -3,54 +3,26 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import prisma from "@/lib/prisma";
+import { getFormById } from "@/features/forms/actions/getFormById";
+import { parseFormContent, getFormTitle, getFormFieldCount } from "@/features/forms/utils/formUtils";
 import { ArrowLeft, Globe, Lock, Users } from "lucide-react";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import React from "react";
 
 const Edit = async ({ params }: { params: Promise<{ formId: string }> }) => {
-  const formId = (await params).formId;
+  const { formId } = await params;
+  if (!formId) return notFound();
 
-  if (!formId) {
-    return (
-      <div className="flex items-center justify-center h-40">
-        <p className="text-gray-500">Form not found.</p>
-      </div>
-    );
-  }
+  const form = await getFormById(Number(formId));
+  if (!form) return notFound();
 
-  const form = await prisma.form.findUnique({
-    where: { id: Number(formId) },
-  });
-
-  if (!form) {
-    return (
-      <div className="flex items-center justify-center h-40">
-        <p className="text-gray-500">Form not found.</p>
-      </div>
-    );
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const content: any =
-    typeof form.content !== "object"
-      ? JSON.parse(form.content as string)
-      : form.content;
-
-  const title =
-    content?.formTitle ||
-    (Array.isArray(content) ? content[0]?.formTitle : "") ||
-    "Untitled Form";
-
-  const fieldCount = Array.isArray(content?.formFields)
-    ? content.formFields.length
-    : Array.isArray(content)
-    ? content[0]?.formFields?.length ?? 0
-    : 0;
+  const content = parseFormContent(form.content);
+  const title = getFormTitle(content);
+  const fieldCount = getFormFieldCount(content);
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
-      {/* Back */}
       <Link href="/dashboard/forms">
         <Button variant="ghost" size="sm" className="gap-2 cursor-pointer -ml-2">
           <ArrowLeft className="w-4 h-4" />
@@ -114,13 +86,7 @@ const Edit = async ({ params }: { params: Promise<{ formId: string }> }) => {
               <Separator />
               <div className="flex items-center justify-between">
                 <span className="text-gray-500 dark:text-gray-400">Status</span>
-                <span
-                  className={
-                    form.published
-                      ? "font-medium text-green-600 dark:text-green-400"
-                      : "font-medium text-yellow-600 dark:text-yellow-400"
-                  }
-                >
+                <span className={form.published ? "font-medium text-green-600 dark:text-green-400" : "font-medium text-yellow-600 dark:text-yellow-400"}>
                   {form.published ? "Live" : "Draft"}
                 </span>
               </div>
@@ -134,11 +100,7 @@ const Edit = async ({ params }: { params: Promise<{ formId: string }> }) => {
                   View submissions
                 </p>
                 <Link href={`/dashboard/forms/${form.id}/submissions`}>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="w-full cursor-pointer border-blue-300 text-blue-700 hover:bg-blue-100 dark:border-blue-700 dark:text-blue-300 dark:hover:bg-blue-900"
-                  >
+                  <Button variant="outline" size="sm" className="w-full cursor-pointer border-blue-300 text-blue-700 hover:bg-blue-100 dark:border-blue-700 dark:text-blue-300 dark:hover:bg-blue-900">
                     <Users className="w-4 h-4 mr-2" />
                     View Responses ({form.submissions})
                   </Button>

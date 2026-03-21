@@ -4,8 +4,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { LinkIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useClipboard } from "@/features/forms/hooks/useClipboard";
-import toast from "react-hot-toast";
+import { useShareLink } from "@/features/forms/hooks/useShareLink";
 
 type Props = {
   formId: number;
@@ -14,17 +13,7 @@ type Props = {
 };
 
 const FormPublishDialog: React.FC<Props> = ({ formId, open, onOpenChange }) => {
-  const shareLink =
-    typeof window !== "undefined"
-      ? `${window.location.origin}/forms/${formId}`
-      : `/forms/${formId}`;
-
-  const { copy } = useClipboard();
-
-  const handleCopy = () => {
-    copy(shareLink);
-    toast.success("Link copied to clipboard!");
-  };
+  const { shareLink, handleCopy } = useShareLink(formId);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
