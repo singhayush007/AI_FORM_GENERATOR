@@ -3,10 +3,10 @@
 import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Lock, Sparkles, Loader2, AlertCircle } from "lucide-react";
 import { generateForm } from "@/features/forms/actions/generateForm";
+import GenerateButton from "@/features/forms/components/GenerateButton";
+import InlineFieldError from "@/features/forms/components/InlineFieldError";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { MAX_FREE_FORM } from "@/lib/utils";
@@ -43,10 +43,8 @@ const GenerateFormInput: React.FC<Props> = ({
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       const formData = new FormData();
       formData.append("description", values.description);
-
       const result = await generateForm(null, formData);
       setSubmitting(false);
-
       if (result.success) {
         toast.success(result.message);
         resetForm();
@@ -77,9 +75,7 @@ const GenerateFormInput: React.FC<Props> = ({
             type="text"
             placeholder="e.g. Create a job application form with 5 fields..."
             className={`flex-1 h-11 px-4 rounded-xl bg-white/20 backdrop-blur-sm border text-white placeholder:text-white/60 outline-none focus:bg-white/25 transition-all text-sm ${
-              hasError
-                ? "border-red-400 focus:border-red-400"
-                : "border-white/30 focus:border-white/60"
+              hasError ? "border-red-400 focus:border-red-400" : "border-white/30 focus:border-white/60"
             }`}
           />
         ) : (
@@ -95,39 +91,13 @@ const GenerateFormInput: React.FC<Props> = ({
           />
         )}
 
-        {canGenerate ? (
-          <Button
-            type="submit"
-            disabled={formik.isSubmitting}
-            className={`h-11 px-5 cursor-pointer transition-all flex items-center gap-2 font-semibold rounded-xl shrink-0 ${
-              isHero
-                ? "bg-white text-blue-700 hover:bg-blue-50"
-                : "bg-blue-600 hover:bg-blue-700 text-white"
-            }`}
-          >
-            {formik.isSubmitting ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
-            ) : (
-              <Sparkles className="w-4 h-4" />
-            )}
-            {formik.isSubmitting ? "Generating..." : "Generate"}
-          </Button>
-        ) : (
-          <Button
-            disabled
-            className="h-11 px-5 flex items-center gap-2 bg-gray-300 text-gray-500 cursor-not-allowed rounded-xl shrink-0"
-          >
-            <Lock className="w-4 h-4" />
-            Upgrade
-          </Button>
-        )}
+        <GenerateButton isHero={isHero} isSubmitting={formik.isSubmitting} canGenerate={canGenerate} />
       </form>
 
       {hasError && (
-        <div className={`flex items-center gap-1.5 text-xs ${isHero ? "text-red-300" : "text-red-500"}`}>
-          <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-          {formik.errors.description}
-        </div>
+        <InlineFieldError
+          message={formik.errors.description as string}
+        />
       )}
     </div>
   );

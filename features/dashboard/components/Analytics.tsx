@@ -1,6 +1,7 @@
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText, Globe, PenLine, Users, BarChart2 } from "lucide-react";
+import MetricCard from "@/features/dashboard/components/MetricCard";
+import ConversionRateBanner from "@/features/dashboard/components/ConversionRateBanner";
 
 type Props = {
   totalForms: number;
@@ -36,28 +37,16 @@ const Analytics: React.FC<Props> = (props) => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {metricCards.map(({ key, title, icon: Icon, color, bg, border, sub }) => (
-          <Card key={key} className={`border ${border} bg-white dark:bg-neutral-900`}>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{title}</CardTitle>
-              <div className={`p-2 rounded-lg ${bg}`}><Icon className={`w-4 h-4 ${color}`} /></div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-4xl font-bold text-gray-900 dark:text-gray-100">{props[key] as number}</p>
-              <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">{sub}</p>
-            </CardContent>
-          </Card>
+        {metricCards.map(({ key, ...cardProps }) => (
+          <MetricCard key={key} value={props[key] as number} {...cardProps} />
         ))}
       </div>
 
       {props.totalForms > 0 && (
-        <div className="rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white">
-          <p className="text-sm font-medium text-blue-100 mb-1">Conversion Rate</p>
-          <p className="text-3xl font-bold">
-            {props.publishedForms > 0 ? Math.round((props.totalSubmissions / props.publishedForms) * 10) / 10 : 0}
-          </p>
-          <p className="text-sm text-blue-200 mt-0.5">average submissions per published form</p>
-        </div>
+        <ConversionRateBanner
+          publishedForms={props.publishedForms}
+          totalSubmissions={props.totalSubmissions}
+        />
       )}
     </div>
   );
