@@ -16,7 +16,7 @@ const DashboardSidebar = () => {
   const pathname = usePathname();
 
   return (
-    <aside className="w-56 shrink-0 flex flex-col border-r border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 min-h-screen">
+    <aside className="hidden md:flex w-56 shrink-0 flex-col border-r border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 min-h-screen">
       <div className="px-5 py-5 border-b border-gray-100 dark:border-neutral-800">
         <Link href="/">
           <span className="text-xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 cursor-pointer">

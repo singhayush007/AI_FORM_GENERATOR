@@ -11,7 +11,8 @@ const SubmissionsDetails: React.FC<Props> = ({ submission, index }) => {
   return (
     <div>
       <h2 className="font-bold text-xl mb-4 text-gray-900 dark:text-gray-100">Response - {index + 1}</h2>
-      <Table className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+      <div className="overflow-x-auto rounded-lg">
+      <Table className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 min-w-[400px]">
         <TableHeader className="bg-gray-100 dark:bg-gray-800">
           <TableRow>
             <TableHead className="text-gray-900 dark:text-gray-100">Questions</TableHead>
@@ -29,6 +30,7 @@ const SubmissionsDetails: React.FC<Props> = ({ submission, index }) => {
           ))}
         </TableBody>
       </Table>
+      </div>
     </div>
   );
 };

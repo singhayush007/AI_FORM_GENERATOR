@@ -20,7 +20,7 @@ const Analytics: React.FC<Props> = (props) => {
   return (
     <div className="max-w-5xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Analytics</h1>
+        <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100">Analytics</h1>
         <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Overview of your form performance</p>
       </div>
 

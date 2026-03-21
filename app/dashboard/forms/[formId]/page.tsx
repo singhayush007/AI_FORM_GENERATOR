@@ -58,7 +58,7 @@ export default async function FormDetailPage({
   });
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
+    <div className="max-w-4xl mx-auto space-y-5">
       {/* Back + Header */}
       <div className="flex items-center gap-3">
         <Link href="/dashboard/forms">
@@ -72,7 +72,7 @@ export default async function FormDetailPage({
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
           <div className="flex items-center gap-3 mb-1">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+            <h1 className="text-xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 break-words">
               {title}
             </h1>
             <Badge

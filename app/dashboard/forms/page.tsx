@@ -22,7 +22,7 @@ const FormsPage = async () => {
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">My Forms</h1>
+          <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100">My Forms</h1>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
             {count} form{count !== 1 ? "s" : ""} created
           </p>
@@ -75,7 +75,7 @@ const FormsPage = async () => {
           </Dialog>
         </div>
       ) : (
-        <div className="flex flex-wrap gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           {forms?.data?.map((form: any) => (
             <FormList key={form.id} form={form} />

@@ -46,7 +46,7 @@ export default async function SubmissionsPage({
       {/* Header */}
       <div className="flex items-start justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+          <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100">
             Submissions
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5 truncate max-w-md">
@@ -78,7 +78,7 @@ export default async function SubmissionsPage({
               className="bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-2xl overflow-hidden shadow-sm"
             >
               {/* Submission header */}
-              <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100 dark:border-neutral-800 bg-gray-50 dark:bg-neutral-800/50">
+              <div className="flex items-center justify-between px-3 sm:px-5 py-3 border-b border-gray-100 dark:border-neutral-800 bg-gray-50 dark:bg-neutral-800/50">
                 <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                   Response #{submissions.length - index}
                 </span>
@@ -95,7 +95,7 @@ export default async function SubmissionsPage({
               </div>
 
               {/* Content */}
-              <div className="p-5">
+              <div className="p-3 sm:p-5">
                 <SubmissionsDetails submission={s} index={index} />
               </div>
             </div>
