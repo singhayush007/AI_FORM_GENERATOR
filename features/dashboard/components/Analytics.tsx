@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText, Globe, PenLine, Users } from "lucide-react";
+import { FileText, Globe, PenLine, Users, BarChart2 } from "lucide-react";
 
 type Props = {
   totalForms: number;
@@ -19,9 +19,20 @@ const metricCards = [
 const Analytics: React.FC<Props> = (props) => {
   return (
     <div className="max-w-5xl mx-auto space-y-6">
-      <div>
-        <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100">Analytics</h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Overview of your form performance</p>
+      <div className="pb-6 border-b border-gray-100 dark:border-neutral-800 flex flex-col items-center text-center">
+        <div className="flex items-center justify-center gap-2 mb-3">
+          <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-400 border border-purple-100 dark:border-purple-900">
+            <BarChart2 className="w-3 h-3" />
+            Dashboard Insights
+          </span>
+        </div>
+        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-gray-900 via-purple-800 to-purple-600 dark:from-gray-100 dark:via-purple-300 dark:to-purple-400 bg-clip-text text-transparent leading-tight">
+          Analytics Overview
+        </h1>
+        <p className="mt-2 text-sm sm:text-base text-gray-500 dark:text-gray-400 max-w-lg leading-relaxed">
+          Track your form performance in real time.{" "}
+          <span className="text-gray-700 dark:text-gray-300 font-medium">Submissions, drafts, and live forms — all in one place.</span>
+        </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
