@@ -8,8 +8,8 @@ const page = async () => {
   return (
     <div className="max-w-5xl mx-auto">
       {/* Page header */}
-      <div className="mb-6 pb-6 border-b border-gray-100 dark:border-neutral-800">
-        <div className="flex items-center gap-2 mb-3">
+      <div className="mb-6 pb-6 border-b border-gray-100 dark:border-neutral-800 flex flex-col items-center text-center">
+        <div className="flex items-center justify-center gap-2 mb-3">
           <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-900">
             <Zap className="w-3 h-3" />
             Plans &amp; Pricing
